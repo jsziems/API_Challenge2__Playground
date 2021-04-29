@@ -1,5 +1,10 @@
-const apiKey = "U5YCwar82d9GKNPxCGPTYasZE30KkEyD2glgTP35"
-let metadata
+
+const baseUrl = "https://api.nasa.gov/planetary/apod?api_key=";
+//const apiKey = "U5YCwar82d9GKNPxCGPTYasZE30KkEyD2glgTP35"
+const apiKey = "DEMO_KEY"
+let url
+
+// ToDo:  Should the display function be after getAndDisplayImage?  Should it be a 'const'?
 
 const display = (imageUrl) => {
     console.log("in display")
@@ -14,33 +19,24 @@ function getAndDisplayImage() {
     let userDate = document.getElementById("user-date").value;
     document.getElementById("display-date").innerHTML = userDate;
 
-    //TO DO:  CHANGE TO USING USER-PROVIDED DATE FOR START AND END DATES
-
-    // THIS endpoint works.  changing either date, using the date parameter, or
-    // omitting the dates breaks it
-    //metadata = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=2017-07-08&end_date=2017-07-10`
-
-    // Also, THIS works as long as end-date is 7-10 or 7-11.  Haven't tested beyond that.
-    // let start_date = "2017-07-08"
-    // let end_date = "2017-07-11"
-    // metadata = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=${start_date}&end_date=${end_date}`
-
-    let start_date = "2017-07-08"
-    let end_date = "2017-07-11"
-    metadata = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=${start_date}&end_date=${end_date}`
-    
-    console.log(metadata)
-    fetch(metadata)
+    url = `${baseUrl}${apiKey}&date=${userDate}`
+    console.log(url)
+    fetch(url)
         .then(res => res.json())
         .then(json => {
-            let photoDate = json[2].date
+            console.log(json)
+            let photoDate = json.date
             console.log(photoDate)
-            console.log(json[2].explanation)
-            console.log(json[2].url)
-
-            display(json[2].url)
+            console.log(json.explanation)
+            console.log(json.url)
+            if (json.media_type == "image") {
+                display(json.url)
+            } else {
+                // ToDo: Clear previous image?
+                document.getElementById("message").innerHTML = 'Not a photograph';
+            }
         })
-        .catch(() => { console.error("something went wrong") })
+    // .catch(() => { console.error("something went wrong") })
 
 }
 
