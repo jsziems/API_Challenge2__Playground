@@ -1,7 +1,7 @@
 
 const baseUrl = "https://api.nasa.gov/planetary/apod?api_key=";
-//const apiKey = "U5YCwar82d9GKNPxCGPTYasZE30KkEyD2glgTP35"
-const apiKey = "DEMO_KEY"
+const apiKey = "U5YCwar82d9GKNPxCGPTYasZE30KkEyD2glgTP35"
+// const apiKey = "DEMO_KEY"
 let url
 
 // ToDo:  Should the display function be after getAndDisplayImage?  Should it be a 'const'?
